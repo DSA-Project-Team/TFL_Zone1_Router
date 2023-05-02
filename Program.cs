@@ -5,8 +5,7 @@ class Program
 {
   static void Main(string[] args)
   {
-    MainMenu appMenu = new MainMenu();
-    appMenu.UserSelectMenu();
+    MainMenu.UserSelectMenu();
 
 
     // var graph = ConstructGraph();
