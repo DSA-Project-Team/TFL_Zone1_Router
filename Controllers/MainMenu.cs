@@ -14,7 +14,7 @@ namespace tflzone1.Models
       Console.WriteLine("(1) Customer");
       Console.WriteLine("(2) Manager\n");
 
-      (bool isInputInteger, int inputValue) = MenuHelper.InputCommand("Enter 1 or 2 to select an option");
+      (bool isInputInteger, int inputValue) = MenuHelper.InputChecker("Enter 1 or 2 to select an option");
 
       if (isInputInteger)
       {

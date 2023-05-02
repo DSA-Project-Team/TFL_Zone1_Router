@@ -12,7 +12,7 @@ namespace tflzone1.Models
       Console.WriteLine("(2) Check station information");
       Console.WriteLine("(3) Go back\n");
 
-      (bool isInputInteger, int inputValue) = MenuHelper.InputCommand("Enter 1, 2, or 3 to select an option");
+      (bool isInputInteger, int inputValue) = MenuHelper.InputChecker("Enter 1, 2, or 3 to select an option");
 
       if (isInputInteger)
       {
@@ -20,11 +20,11 @@ namespace tflzone1.Models
         {
           case 1:
             Console.Clear();
-            Console.WriteLine("Find a route");
+            FindRouteMenu();
             break;
           case 2:
             Console.Clear();
-            Console.WriteLine("Check station information");
+            CheckStationMenu();
             break;
           case 3:
             Console.Clear();
@@ -42,5 +42,28 @@ namespace tflzone1.Models
         OptionMenu();
       }
     }
+
+    public static void FindRouteMenu()
+    {
+      string errorMessage = "Error: An invalid station was entered. Do not enter stations outside zone 1, DLR, Elizabeth Line, and London Overground rail lines";
+
+      MenuHelper.MenuHeader();
+      Console.WriteLine("Find the fastest route to your destination within Zone 1.\n");
+
+      (bool isStartStationCorrect, string startStation) = MenuHelper.stationInputChecker("Enter Start Station");
+
+      (bool isEndStationCorrect, string endStation) = MenuHelper.stationInputChecker("Enter End Station");
+
+      if (isStartStationCorrect && isEndStationCorrect)
+      {
+        // Go to route information
+      }
+      else
+      {
+        MenuHelper.ErrorMessage(errorMessage);
+        FindRouteMenu();
+      }
+    }
+    public static void CheckStationMenu() { }
   }
 }

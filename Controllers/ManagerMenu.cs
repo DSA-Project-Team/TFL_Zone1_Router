@@ -14,7 +14,7 @@ namespace tflzone1.Models
       Console.WriteLine("(4) Check all delayed routes");
       Console.WriteLine("(5) Go back\n");
 
-      (bool isInputInteger, int inputValue) = MenuHelper.InputCommand("Enter 1, 2, 3, 4, or 5 to select an option");
+      (bool isInputInteger, int inputValue) = MenuHelper.InputChecker("Enter 1, 2, 3, 4, or 5 to select an option");
 
       if (isInputInteger)
       {
