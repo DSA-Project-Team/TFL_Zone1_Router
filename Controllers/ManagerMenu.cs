@@ -22,19 +22,19 @@ namespace tflzone1.Models
         {
           case 1:
             Console.Clear();
-            Console.WriteLine("Adjust route walking time");
+            ChangeRouteTimeMenu();
             break;
           case 2:
             Console.Clear();
-            Console.WriteLine("Close a route");
+            CloseRouteMenu();
             break;
           case 3:
             Console.Clear();
-            Console.WriteLine("Check all closed routes");
+            CheckClosedRouteMenu();
             break;
           case 4:
             Console.Clear();
-            Console.WriteLine("Check all delayed routes");
+            CheckDelayedRouteMenu();
             break;
           case 5:
             Console.Clear();
@@ -52,5 +52,10 @@ namespace tflzone1.Models
         OptionMenu();
       }
     }
+
+    public static void ChangeRouteTimeMenu() { }
+    public static void CloseRouteMenu() { }
+    public static void CheckClosedRouteMenu() { }
+    public static void CheckDelayedRouteMenu() { }
   }
 }

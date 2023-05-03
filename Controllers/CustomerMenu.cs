@@ -7,7 +7,7 @@ namespace tflzone1.Models
       string errorMessage = "Error: Enter only 1, 2, or 3 to select your preferred menu option";
 
       MenuHelper.MenuHeader();
-      Console.WriteLine("Manager Menu\n");
+      Console.WriteLine("Customer Menu\n");
       Console.WriteLine("(1) Find a route");
       Console.WriteLine("(2) Check station information");
       Console.WriteLine("(3) Go back\n");
@@ -76,7 +76,8 @@ namespace tflzone1.Models
 
       if (isStationCorrect)
       {
-        // Go to station information
+        Console.Clear();
+        ShowStationInfo(station);
       }
       else
       {
@@ -129,6 +130,54 @@ namespace tflzone1.Models
       {
         MenuHelper.ErrorMessage(errorMessage);
         ShowRouteMenu(startStation, endStation);
+      }
+    }
+
+    public static void ShowStationInfo(string station)
+    {
+      //TODO: Call function that gets the station information , probably in the form of a object with the following properties: id, name, tube line (central, circle, etc), travel zone (zone 1, etc), and station status (closed, opened, or delayed) 
+
+      string errorMessage = "Error: Enter only 1 or 2 to select your preferred menu option";
+
+      int stationId = 419;
+      string stationName = TextHelper.CapitalizeFirstLetter(station);
+      string tubeLine = TextHelper.CapitalizeFirstLetter("central");
+      string travelZone = TextHelper.CapitalizeFirstLetter("zone 1");
+      string stationStatus = TextHelper.CapitalizeFirstLetter("open");
+
+      MenuHelper.MenuHeader();
+      Console.WriteLine("Station Information\n");
+      Console.WriteLine($"Station ID: {stationId}");
+      Console.WriteLine($"Station Name: {stationName}");
+      Console.WriteLine($"Tube Line: {tubeLine}");
+      Console.WriteLine($"Travel Zone: {travelZone}");
+      Console.WriteLine($"Station Status: {stationStatus}\n");
+
+
+      (bool isInputInteger, int inputValue) = MenuHelper.InputChecker("Enter 1 to check another station information or 2 to go to main customer menu");
+
+      if (isInputInteger)
+      {
+        switch (inputValue)
+        {
+          case 1:
+            Console.Clear();
+            CheckStationMenu();
+            break;
+          case 2:
+            Console.Clear();
+            OptionMenu();
+            break;
+          default:
+            MenuHelper.ErrorMessage(errorMessage);
+            ShowStationInfo(station);
+            break;
+        }
+      }
+      else
+      {
+        MenuHelper.ErrorMessage(errorMessage);
+        ShowStationInfo(station);
       }
     }
   }
