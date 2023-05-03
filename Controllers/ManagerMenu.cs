@@ -54,7 +54,68 @@ namespace tflzone1.Models
     }
 
     public static void ChangeRouteTimeMenu() { }
-    public static void CloseRouteMenu() { }
+    public static void CloseRouteMenu()
+    {
+      string errorMessage = "Error: An invalid station was entered. Do not enter stations outside zone 1, DLR, Elizabeth Line, and London Overground rail lines";
+      bool stationIsClosed = false;
+
+      MenuHelper.MenuHeader();
+      Console.WriteLine("Close a route\n");
+
+      (bool isStationCorrect, string station) = MenuHelper.stationInputChecker("Enter Station");
+
+      void ShowNavigation()
+      {
+        (bool isInputInteger, int inputValue) = MenuHelper.InputChecker("Enter 1 to close another route or 2 to go back to the main manager menu");
+
+        if (isInputInteger)
+        {
+          switch (inputValue)
+          {
+            case 1:
+              Console.Clear();
+              CloseRouteMenu();
+              break;
+            case 2:
+              Console.Clear();
+              OptionMenu();
+              break;
+            default:
+              MenuHelper.ErrorMessage(errorMessage);
+              CloseRouteMenu();
+              break;
+          }
+        }
+        else
+        {
+          MenuHelper.ErrorMessage(errorMessage);
+          CloseRouteMenu();
+        }
+
+      }
+
+      if (isStationCorrect)
+      {
+        //TODO: CHECK if the station is already closed and change the hardcoded stationIsClosed variable
+
+        if (stationIsClosed)
+        {
+          MenuHelper.ErrorMessage($"Failed: {TextHelper.CapitalizeFirstLetter(station)} is already closed!");
+          ShowNavigation();
+        }
+        else
+        {
+          //TODO: Call function that closes the station
+          MenuHelper.SuccessMessage($"Success: {TextHelper.CapitalizeFirstLetter(station)} has been closed successfully!");
+          ShowNavigation();
+        }
+      }
+      else
+      {
+        MenuHelper.ErrorMessage(errorMessage);
+        CloseRouteMenu();
+      }
+    }
     public static void CheckClosedRouteMenu()
     {
       string errorMessage = "Error: Enter only 1 to select your preferred menu option";

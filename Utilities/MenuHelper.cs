@@ -16,6 +16,13 @@ namespace tflzone1.Models
       Console.ResetColor();
     }
 
+    public static void SuccessMessage(string message)
+    {
+      Console.ForegroundColor = ConsoleColor.Green;
+      Console.WriteLine($"\n{message}\n");
+      Console.ResetColor();
+    }
+
     public static (bool, int) InputChecker(string inputInstuction)
     {
       Console.Write($"\n{inputInstuction}: ");
