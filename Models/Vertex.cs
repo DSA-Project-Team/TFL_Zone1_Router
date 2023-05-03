@@ -8,12 +8,14 @@ namespace tflzone1.Models
     class Vertex
     {
         private Dictionary<Vertex, int> _neighbours;
+
         private bool _visited;
         public bool Visited
         {
             get { return _visited; }
             set { _visited = value; }
         }
+
         private int _distance;
         public int Distance
         {
@@ -27,6 +29,34 @@ namespace tflzone1.Models
             get { return _node; }
             set { _node = value; }
         }
+
+        private string _tubeLine;
+        public string TubeLine
+        {
+            get { return _tubeLine; }
+            set { _tubeLine = value; }
+        }
+
+        private Status _status;
+        public Status Status
+        {
+            get { return _status; }
+            set { _status = value; }
+        }
+        private Access _access;
+        public Access Access
+        {
+            get { return _access; }
+            set { _access = value; }
+        }
+        private string _travelZone;
+        public string TravelZone
+        {
+            get { return _travelZone; }
+            set { _travelZone = value; }
+        }
+        
+
         private Vertex? _previousVertex;
         public Vertex? PreviousVertex
         {
@@ -41,12 +71,6 @@ namespace tflzone1.Models
             set { _hasDelay = value; }
         }
 
-        private bool _routeImpossible;
-        public bool RouteImpossible
-        {
-            get { return _routeImpossible; }
-            set { _routeImpossible = value; }
-        }
         private string _routeImpossibleComment;
         public string RouteImpossibleComment
         {
@@ -55,13 +79,15 @@ namespace tflzone1.Models
         }
         
         
-        public Vertex(string node)
+        public Vertex(string node, string tubeline)
         {
             _node = node;
+            _tubeLine = tubeline;
             _distance = Int32.MaxValue;
             _neighbours = new Dictionary<Vertex, int>();
             _hasDelay = false;
             _routeImpossibleComment = String.Empty;
+            _travelZone = "Zone 1";
         }
 
         public void AddNeighbour(Vertex v, int weight) {
@@ -75,6 +101,7 @@ namespace tflzone1.Models
             _neighbours[vertex.Key] += delay;
             vertex.Key._hasDelay = true;
         }
+
         public void RemoveDelay(string v, int delay) 
         {
             var vertex = _neighbours.FirstOrDefault((kv) => kv.Key.Node == v);
@@ -85,13 +112,14 @@ namespace tflzone1.Models
         public void MakeRouteImpossible(string v, string reason) 
         {
             var vertex = _neighbours.FirstOrDefault((kv) => kv.Key.Node == v);
-            vertex.Key._routeImpossible = true;
+            vertex.Key._status = Status.Closed;
             vertex.Key._routeImpossibleComment = reason;
         }
+
         public void MakeRoutePossible(string v) 
         {
             var vertex = _neighbours.FirstOrDefault((kv) => kv.Key.Node == v);
-            vertex.Key._routeImpossible = false;
+            vertex.Key._status = Status.Open;
         }
 
         public Vertex[] GetNeighbours() 
@@ -105,7 +133,7 @@ namespace tflzone1.Models
         }
         public Vertex[] GetImpossibleRoutes()
         {
-            return _neighbours.Keys.ToList().Where(v => v._routeImpossible == true).ToArray();
+            return _neighbours.Keys.ToList().Where(v => v._status == Status.Closed).ToArray();
         }
 
         public int GetWeight(Vertex neighbor) 
@@ -123,6 +151,7 @@ namespace tflzone1.Models
         {
             _previousVertex = prevVertex;
         }
+
         public void MarkAsVisited() 
         {
             _visited = true;

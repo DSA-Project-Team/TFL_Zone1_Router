@@ -13,22 +13,22 @@ class Program
     static Graph ConstructGraph()
     {
         var graph = new Graph();
-        graph.AddVertex("A");
-        graph.AddVertex("B");
-        graph.AddVertex("C");
-        graph.AddVertex("D");
-        graph.AddVertex("E");
-        graph.AddVertex("F");
+        graph.AddVertex("A", "Elizabeth");
+        graph.AddVertex("B", "Elizabeth");
+        graph.AddVertex("C", "Elizabeth");
+        graph.AddVertex("D", "Elizabeth");
+        graph.AddVertex("E", "Elizabeth");
+        graph.AddVertex("F", "Elizabeth");
 
-        graph.AddEdge(new Vertex("A"), new Vertex("B"), 7);
-        graph.AddEdge(new Vertex("A"), new Vertex("C"), 9);
-        graph.AddEdge(new Vertex("A"), new Vertex("F"), 14);
-        graph.AddEdge(new Vertex("B"), new Vertex("C"), 10);
-        graph.AddEdge(new Vertex("B"), new Vertex("D"), 15);
-        graph.AddEdge(new Vertex("C"), new Vertex("D"), 11);
-        graph.AddEdge(new Vertex("C"), new Vertex("F"), 2);
-        graph.AddEdge(new Vertex("D"), new Vertex("E"), 6);
-        graph.AddEdge(new Vertex("E"), new Vertex("F"), 9);
+        graph.AddEdge(new Vertex("A", "Elizabeth"), new Vertex("B", "Elizabeth"), 7);
+        graph.AddEdge(new Vertex("A", "Elizabeth"), new Vertex("C", "Elizabeth"), 9);
+        graph.AddEdge(new Vertex("A", "Elizabeth"), new Vertex("F", "Elizabeth"), 14);
+        graph.AddEdge(new Vertex("B", "Elizabeth"), new Vertex("C", "Elizabeth"), 10);
+        graph.AddEdge(new Vertex("B", "Elizabeth"), new Vertex("D", "Elizabeth"), 15);
+        graph.AddEdge(new Vertex("C", "Elizabeth"), new Vertex("D", "Elizabeth"), 11);
+        graph.AddEdge(new Vertex("C", "Elizabeth"), new Vertex("F", "Elizabeth"), 2);
+        graph.AddEdge(new Vertex("D", "Elizabeth"), new Vertex("E", "Elizabeth"), 6);
+        graph.AddEdge(new Vertex("E", "Elizabeth"), new Vertex("F", "Elizabeth"), 9);
 
         return graph;
     }
@@ -99,3 +99,17 @@ class Program
 //         }
 //         result = $"{result} ]";
 //         Console.WriteLine($"The shortest path is: {result}");
+
+// Algorithm Analysis
+// Stopwatch stopWatch = new Stopwatch();
+// stopWatch.Start();
+// Thread.Sleep(3500);
+// stopWatch.Stop();
+// // Get the elapsed time as a TimeSpan value.
+// TimeSpan ts = stopWatch.Elapsed;
+
+// // Format and display the TimeSpan value.
+// string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+//     ts.Hours, ts.Minutes, ts.Seconds,
+//     ts.Milliseconds / 10);
+// Console.WriteLine("RunTime " + elapsedTime);

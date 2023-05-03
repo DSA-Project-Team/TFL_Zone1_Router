@@ -30,10 +30,10 @@ namespace tflzone1.Models
             _vertices = new Dictionary<string, Vertex>();
         }
 
-        public void AddVertex(string node) 
+        public void AddVertex(string node, string tubeline) 
         {
             if(!_vertices.ContainsKey(node))
-                _vertices.Add(node, new Vertex(node));
+                _vertices.Add(node, new Vertex(node, tubeline));
         }
 
         public Vertex? GetVertex(string node)
