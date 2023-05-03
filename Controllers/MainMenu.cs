@@ -1,7 +1,10 @@
+using tflzone1.Controllers;
+
 namespace tflzone1.Models
 {
   class MainMenu
   {
+    private Graph graph = GraphConstructor.graph;
     public static void UserSelectMenu()
     {
       string errorMessage = "Error: Enter only 1 or 2 to select your preferred user profile";

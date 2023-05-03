@@ -1,7 +1,10 @@
+using tflzone1.Controllers;
+
 namespace tflzone1.Models
 {
   class ManagerMenu
   {
+    private static Graph graph = GraphConstructor.graph;
     public static void OptionMenu()
     {
       string errorMessage = "Error: Enter only 1, 2, 3, 4, or 5 to select your preferred menu option";
@@ -61,9 +64,11 @@ namespace tflzone1.Models
       MenuHelper.MenuHeader();
       Console.WriteLine("Adjust Route Walking Time\n");
 
-      (bool isStartStationCorrect, string startStation) = MenuHelper.stationInputChecker("Enter Start Station");
-      (bool isNextStationCorrect, string nextStation) = MenuHelper.stationInputChecker("Enter Next Station");
-      (bool isNewRouteTimeCorrect, int newRouteTime) = MenuHelper.InputChecker("Enter New Route Time (in minutes)");
+      string startLine = MenuHelper.lineInputChecker("Enter Start line");
+      (bool isStartStationCorrect, string startStation) = MenuHelper.stationInputChecker("Enter Start Station", startLine);
+      string nextLine = MenuHelper.lineInputChecker("Enter End line");
+      (bool isNextStationCorrect, string nextStation) = MenuHelper.stationInputChecker("Enter Next Station", nextLine);
+      (bool isNewRouteTimeCorrect, int delay) = MenuHelper.InputChecker("Enter New Route Time (in minutes)");
 
       bool areStartionNext = true; // hardcoded
 
@@ -98,17 +103,24 @@ namespace tflzone1.Models
 
       if (isStartStationCorrect && isNextStationCorrect && isNewRouteTimeCorrect)
       {
+        var from  = startStation.Trim();
+        var to  = nextStation.Trim();
+
+        Console.WriteLine($"{from} and {to}");
+
         //TODO: Check if the stations entered are next to eachother: For example, Paddington and Edgware road are next to eachother, so set areStartionNext variable to true and vice versa.
-        if (areStartionNext)
+        var delayAdded = graph.AddDelay(from.ToLower(), to.ToLower(), delay);
+
+        if (delayAdded)
         {
           //TODO: Write logic to change the route time to the new route time: Update the state
 
-          MenuHelper.SuccessMessage($"Success: The walking route time from {TextHelper.CapitalizeFirstLetter(startStation)} to {TextHelper.CapitalizeFirstLetter(nextStation)} has been changed to {newRouteTime} minutes");
+          MenuHelper.SuccessMessage($"Success: The walking route time from {TextHelper.CapitalizeFirstLetter(startStation)} to {TextHelper.CapitalizeFirstLetter(nextStation)} has been delayed by {delay} minutes");
           ShowNavigation();
         }
         else
         {
-          MenuHelper.ErrorMessage($"Error: {TextHelper.CapitalizeFirstLetter(startStation)} and {TextHelper.CapitalizeFirstLetter(nextStation)} are not next to eachother");
+          MenuHelper.ErrorMessage($"Error: {TextHelper.CapitalizeFirstLetter(startStation)} and {TextHelper.CapitalizeFirstLetter(nextStation)} are not next to each other or do not exist");
           ChangeRouteTimeMenu();
         }
 
@@ -128,7 +140,8 @@ namespace tflzone1.Models
       MenuHelper.MenuHeader();
       Console.WriteLine("Close a route\n");
 
-      (bool isStationCorrect, string station) = MenuHelper.stationInputChecker("Enter Station");
+      string stationLine = MenuHelper.lineInputChecker("Enter Station line");
+      (bool isStationCorrect, string station) = MenuHelper.stationInputChecker("Enter Station", stationLine);
 
       void ShowNavigation()
       {
@@ -229,10 +242,11 @@ namespace tflzone1.Models
       //TODO: Dynamically render the list using a loop and fetching the data from the "delayed routes" list (It is hardcoded ATM)
 
       //TODO: The "delayed routes" list should have the have objects with the following properties: Line name, start station, end station, previous route time, and current route time.
+      DisplayDelayedRoutes();
 
-      Console.WriteLine("Victoria Line: Oxford Circus - Warren Street : 18 min now 23 min");
-      Console.WriteLine("Victoria Line: Oxford Circus - Warren Street : 18 min now 23 min");
-      Console.WriteLine("Victoria Line: Oxford Circus - Warren Street : 18 min now 23 min");
+      // Console.WriteLine("Victoria Line: Oxford Circus - Warren Street : 18 min now 23 min");
+      // Console.WriteLine("Victoria Line: Oxford Circus - Warren Street : 18 min now 23 min");
+      // Console.WriteLine("Victoria Line: Oxford Circus - Warren Street : 18 min now 23 min");
 
       (bool isInputInteger, int inputValue) = MenuHelper.InputChecker("Enter 1 to go back to the main manager menu");
 
@@ -254,6 +268,19 @@ namespace tflzone1.Models
       {
         MenuHelper.ErrorMessage(errorMessage);
         CheckDelayedRouteMenu();
+      }
+    }
+
+    static void DisplayDelayedRoutes()
+    {
+      foreach (var vertex in graph.Vertices)
+      {
+        var delayedRoutes = vertex.Value.GetDelayedRoutes();
+
+        foreach (var delayedRoute in delayedRoutes)
+        {
+          Console.WriteLine($"({vertex.Key} - {delayedRoute.Node}) : {vertex.Value.GetWeight(delayedRoute)} mins");
+        }
       }
     }
   }

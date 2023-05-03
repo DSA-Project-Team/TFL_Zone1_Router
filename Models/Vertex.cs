@@ -7,7 +7,7 @@ namespace tflzone1.Models
 {
   class Vertex
   {
-    private Dictionary<Vertex, int> _neighbours;
+    private Dictionary<Vertex, int> _neighbours; // Charing Cross (Northern, Bakerloo)
     private bool _visited;
     public bool Visited
     {
@@ -27,6 +27,7 @@ namespace tflzone1.Models
       get { return _node; }
       set { _node = value; }
     }
+    
     private Vertex? _previousVertex;
     public Vertex? PreviousVertex
     {

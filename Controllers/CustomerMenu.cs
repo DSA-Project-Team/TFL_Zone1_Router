@@ -1,7 +1,10 @@
+using tflzone1.Controllers;
+
 namespace tflzone1.Models
 {
   class CustomerMenu
   {
+    private static Graph graph = GraphConstructor.graph;
     public static void OptionMenu()
     {
       string errorMessage = "Error: Enter only 1, 2, or 3 to select your preferred menu option";
@@ -50,9 +53,14 @@ namespace tflzone1.Models
       MenuHelper.MenuHeader();
       Console.WriteLine("Find the fastest route to your destination within Zone 1.\n");
 
-      (bool isStartStationCorrect, string startStation) = MenuHelper.stationInputChecker("Enter Start Station");
+      string startLine = MenuHelper.lineInputChecker("Enter Start line");
 
-      (bool isEndStationCorrect, string endStation) = MenuHelper.stationInputChecker("Enter End Station");
+      (bool isStartStationCorrect, string startStation) = MenuHelper.stationInputChecker("Enter Start Station", startLine);
+
+      string endLine = MenuHelper.lineInputChecker("Enter End line");
+
+      (bool isEndStationCorrect, string endStation) = MenuHelper.stationInputChecker("Enter End Station", endLine);
+
 
       if (isStartStationCorrect && isEndStationCorrect)
       {
@@ -72,7 +80,8 @@ namespace tflzone1.Models
       MenuHelper.MenuHeader();
       Console.WriteLine("Check any station information within Zone 1.\n");
 
-      (bool isStationCorrect, string station) = MenuHelper.stationInputChecker("Enter Station");
+      string stationLine = MenuHelper.lineInputChecker("Enter Station line");
+      (bool isStationCorrect, string station) = MenuHelper.stationInputChecker("Enter Station", stationLine);
 
       if (isStationCorrect)
       {

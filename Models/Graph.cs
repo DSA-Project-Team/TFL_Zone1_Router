@@ -55,12 +55,20 @@ namespace tflzone1.Models
       _vertices[to.Node].AddNeighbour(from, dist);
     }
 
-    public void AddDelay(string from, string to, int delayCost)
+    public bool AddDelay(string from, string to, int delayCost)
     {
       if (!_vertices.ContainsKey(from) || !_vertices.ContainsKey(to))
-        return;
+        return false;
+
+      var neighbours = _vertices[from].GetNeighbours();
+      var nb = neighbours.FirstOrDefault(neighbour => neighbour.Node.ToLower() == to.ToLower());
+
+      if(nb == null)
+        return false;
+      
       _vertices[from].AddDelay(to, delayCost);
       _vertices[to].AddDelay(from, delayCost);
+      return true;
     }
 
     public void RemoveDelay(string from, string to, int delayCost)

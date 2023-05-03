@@ -8,8 +8,7 @@ class Program
   {
     //Start the application menu
     GraphConstructor.ConstructGraph();
-    var graph = GraphConstructor.graph;
-    MainMenu.UserSelectMenu(graph);
+    MainMenu.UserSelectMenu();
 
 
     // MakeRouteImpossible(graph, "D", "E", "Bridge Closed");
