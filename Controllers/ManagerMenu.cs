@@ -53,7 +53,73 @@ namespace tflzone1.Models
       }
     }
 
-    public static void ChangeRouteTimeMenu() { }
+    public static void ChangeRouteTimeMenu()
+    {
+      string errorMessage1 = "Error: Invalid routes or route time entered";
+      string errorMessage2 = "Error: Enter only 1 or 2 to select your preferred option";
+
+      MenuHelper.MenuHeader();
+      Console.WriteLine("Adjust Route Walking Time\n");
+
+      (bool isStartStationCorrect, string startStation) = MenuHelper.stationInputChecker("Enter Start Station");
+      (bool isNextStationCorrect, string nextStation) = MenuHelper.stationInputChecker("Enter Next Station");
+      (bool isNewRouteTimeCorrect, int newRouteTime) = MenuHelper.InputChecker("Enter New Route Time");
+
+      bool areStartionNext = true;
+
+      void ShowNavigation()
+      {
+        (bool isInputInteger, int inputValue) = MenuHelper.InputChecker("Enter 1 to adjust another route walking time or 2 to go back to the main manager menu");
+
+        if (isInputInteger)
+        {
+          switch (inputValue)
+          {
+            case 1:
+              Console.Clear();
+              ChangeRouteTimeMenu();
+              break;
+            case 2:
+              Console.Clear();
+              OptionMenu();
+              break;
+            default:
+              MenuHelper.ErrorMessage(errorMessage2);
+              ChangeRouteTimeMenu();
+              break;
+          }
+        }
+        else
+        {
+          MenuHelper.ErrorMessage(errorMessage2);
+          CloseRouteMenu();
+        }
+      }
+
+      if (isStartStationCorrect && isNextStationCorrect && isNewRouteTimeCorrect)
+      {
+        //TODO: Check if the stations entered are next to eachother: For example, Paddington and Edgware road are next to eachother, so set areStartionNext variable to true and vice versa.
+        if (areStartionNext)
+        {
+          //TODO: Write logic to change the route time to the new route time: Update the state
+
+          MenuHelper.SuccessMessage($"Success: The walking route time from {TextHelper.CapitalizeFirstLetter(startStation)} to {TextHelper.CapitalizeFirstLetter(nextStation)} has been changed to {newRouteTime} minutes");
+          ShowNavigation();
+        }
+        else
+        {
+          MenuHelper.ErrorMessage($"{TextHelper.CapitalizeFirstLetter(startStation)} and {TextHelper.CapitalizeFirstLetter(nextStation)} are not next to eachother");
+          ChangeRouteTimeMenu();
+        }
+
+      }
+      else
+      {
+        MenuHelper.ErrorMessage(errorMessage1);
+        ChangeRouteTimeMenu();
+      }
+
+    }
     public static void CloseRouteMenu()
     {
       string errorMessage = "Error: An invalid station was entered. Do not enter stations outside zone 1, DLR, Elizabeth Line, and London Overground rail lines";
@@ -91,7 +157,6 @@ namespace tflzone1.Models
           MenuHelper.ErrorMessage(errorMessage);
           CloseRouteMenu();
         }
-
       }
 
       if (isStationCorrect)
