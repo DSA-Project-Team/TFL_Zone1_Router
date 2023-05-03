@@ -56,7 +56,8 @@ namespace tflzone1.Models
 
       if (isStartStationCorrect && isEndStationCorrect)
       {
-        // Go to route information
+        Console.Clear();
+        ShowRouteMenu(startStation, endStation);
       }
       else
       {
@@ -64,6 +65,71 @@ namespace tflzone1.Models
         FindRouteMenu();
       }
     }
-    public static void CheckStationMenu() { }
+    public static void CheckStationMenu()
+    {
+      string errorMessage = "Error: An invalid station was entered. Do not enter stations outside zone 1, DLR, Elizabeth Line, and London Overground rail lines";
+
+      MenuHelper.MenuHeader();
+      Console.WriteLine("Check any station information within Zone 1.\n");
+
+      (bool isStationCorrect, string station) = MenuHelper.stationInputChecker("Enter Station");
+
+      if (isStationCorrect)
+      {
+        // Go to station information
+      }
+      else
+      {
+        MenuHelper.ErrorMessage(errorMessage);
+        CheckStationMenu();
+      }
+    }
+
+    public static void ShowRouteMenu(string startStation, string endStation)
+    {
+      // TODO: Call function that calculates the travel time and generates the route path including change over stations etc.
+
+      // TODO: Get the Line names of the startStation and the endStation. The values are currently hardcoded
+
+      string errorMessage = "Error: Enter only 1 or 2 to select your preferred menu option";
+      int totalJourneyTime = 36;
+      string start = TextHelper.CapitalizeFirstLetter(startStation);
+      string end = TextHelper.CapitalizeFirstLetter(endStation);
+
+      MenuHelper.MenuHeader();
+      Console.WriteLine($"Route: {start} to {end}\n\n");
+      Console.WriteLine($"Start: {start} (Central)\n");
+
+      //TODO: Input change over details here
+
+      Console.WriteLine($"End: {end} (Cicle)\n");
+      Console.WriteLine($"Total Journey Time: {totalJourneyTime}min\n");
+
+      (bool isInputInteger, int inputValue) = MenuHelper.InputChecker("Enter 1 to find another route or 2 to go to main customer menu");
+
+      if (isInputInteger)
+      {
+        switch (inputValue)
+        {
+          case 1:
+            Console.Clear();
+            FindRouteMenu();
+            break;
+          case 2:
+            Console.Clear();
+            OptionMenu();
+            break;
+          default:
+            MenuHelper.ErrorMessage(errorMessage);
+            ShowRouteMenu(startStation, endStation);
+            break;
+        }
+      }
+      else
+      {
+        MenuHelper.ErrorMessage(errorMessage);
+        ShowRouteMenu(startStation, endStation);
+      }
+    }
   }
 }

@@ -7,6 +7,7 @@ namespace tflzone1.Models
 
     public static void UserSelectMenu()
     {
+      Console.WriteLine(MenuHelper.CapitalizeFirstLetter("oxford circus"));
       string errorMessage = "Error: Enter only 1 or 2 to select your preferred user profile";
 
       MenuHelper.MenuHeader();

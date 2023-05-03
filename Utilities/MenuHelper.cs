@@ -6,9 +6,7 @@ namespace tflzone1.Models
     {
       Console.WriteLine("===================================================");
       Console.WriteLine("===== TFL TUBE WALKING ROUTE (ZONE 1) CHECKER =====");
-      Console.WriteLine("===================================================");
-      Console.WriteLine("");
-
+      Console.WriteLine("===================================================\n");
     }
 
     public static void ErrorMessage(string message)
@@ -34,17 +32,37 @@ namespace tflzone1.Models
       Console.Write($"{inputInstuction}: ");
       var inputValue = Console.ReadLine();
 
-      // Check if input is not null
       string station = inputValue != null ? inputValue : "";
 
       // List of dummy route names within zone 1 (to be changed later)
       List<string> validRoutes = new List<string> { "Oxford Circus", "Paddington", "Waterloo" };
 
-      // Check if the route name exists within zone 1 and change the state of isRouteValid accordingly [It is important to convert route input value and actual route values to lowercase before comparing them because some users might enter "oxford Circus" instead of "Oxford Circus"]
+      //TODO: Check if the route name exists within zone 1 and change the state of isRouteValid accordingly [It is important to convert route input value and actual route values to lowercase before comparing them because some users might enter "oxford Circus" instead of "Oxford Circus"]
 
       bool isRouteValid = validRoutes.Contains(station);
 
       return (isRouteValid, station);
+    }
+
+    public static string CapitalizeFirstLetter(string content)
+    {
+      if (string.IsNullOrEmpty(content))
+      {
+        return content;
+      }
+
+      string[] words = content.Split(' ');
+
+      for (int i = 0; i < words.Length; i++)
+      {
+        if (words[i].Length > 0)
+        {
+          char firstChar = Char.ToUpper(words[i][0]);
+          words[i] = firstChar + words[i].Substring(1).ToLower();
+        }
+      }
+
+      return string.Join(" ", words);
     }
   }
 }
