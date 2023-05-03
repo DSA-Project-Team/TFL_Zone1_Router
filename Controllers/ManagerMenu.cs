@@ -55,7 +55,44 @@ namespace tflzone1.Models
 
     public static void ChangeRouteTimeMenu() { }
     public static void CloseRouteMenu() { }
-    public static void CheckClosedRouteMenu() { }
+    public static void CheckClosedRouteMenu()
+    {
+      string errorMessage = "Error: Enter only 1 to select your preferred menu option";
+
+      MenuHelper.MenuHeader();
+      Console.WriteLine("All closed routes\n");
+
+      //TODO: Dynamically render the list using a loop and fetching the data from the "closed routes" list (It is hardcoded ATM)
+
+      //TODO: The "closed routes" list should have the have objects with the following properties: Line name, start station, and end station
+
+      Console.WriteLine("Northern Line: London Bridge - Monument: Closed");
+      Console.WriteLine("Northern Line: London Bridge - Monument: Closed");
+      Console.WriteLine("Northern Line: London Bridge - Monument: Closed");
+      Console.WriteLine("Northern Line: London Bridge - Monument: Closed");
+
+      (bool isInputInteger, int inputValue) = MenuHelper.InputChecker("Enter 1 to go back to the main manager menu");
+
+      if (isInputInteger)
+      {
+        switch (inputValue)
+        {
+          case 1:
+            Console.Clear();
+            OptionMenu();
+            break;
+          default:
+            MenuHelper.ErrorMessage(errorMessage);
+            CheckClosedRouteMenu();
+            break;
+        }
+      }
+      else
+      {
+        MenuHelper.ErrorMessage(errorMessage);
+        CheckClosedRouteMenu();
+      }
+    }
     public static void CheckDelayedRouteMenu()
     {
       string errorMessage = "Error: Enter only 1 to select your preferred menu option";
