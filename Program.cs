@@ -1,80 +1,85 @@
-﻿using tflzone1.Models;
+﻿using tflzone1.Controllers;
+using tflzone1.Models;
 
 namespace tflzone1;
 class Program
 {
-    static void Main(string[] args)
-    {
-        var graph = ConstructGraph();
-        MakeRouteImpossible(graph, "D", "E", "Bridge Closed");
-        DisplayImpossibleRoutes(graph);
-    }
+  static void Main(string[] args)
+  {
+    //Start the application menu
+    GraphConstructor.ConstructGraph();
+    MainMenu.UserSelectMenu();
 
-    static Graph ConstructGraph()
-    {
-        var graph = new Graph();
-        graph.AddVertex("A", "Elizabeth");
-        graph.AddVertex("B", "Elizabeth");
-        graph.AddVertex("C", "Elizabeth");
-        graph.AddVertex("D", "Elizabeth");
-        graph.AddVertex("E", "Elizabeth");
-        graph.AddVertex("F", "Elizabeth");
 
-        graph.AddEdge(new Vertex("A", "Elizabeth"), new Vertex("B", "Elizabeth"), 7);
-        graph.AddEdge(new Vertex("A", "Elizabeth"), new Vertex("C", "Elizabeth"), 9);
-        graph.AddEdge(new Vertex("A", "Elizabeth"), new Vertex("F", "Elizabeth"), 14);
-        graph.AddEdge(new Vertex("B", "Elizabeth"), new Vertex("C", "Elizabeth"), 10);
-        graph.AddEdge(new Vertex("B", "Elizabeth"), new Vertex("D", "Elizabeth"), 15);
-        graph.AddEdge(new Vertex("C", "Elizabeth"), new Vertex("D", "Elizabeth"), 11);
-        graph.AddEdge(new Vertex("C", "Elizabeth"), new Vertex("F", "Elizabeth"), 2);
-        graph.AddEdge(new Vertex("D", "Elizabeth"), new Vertex("E", "Elizabeth"), 6);
-        graph.AddEdge(new Vertex("E", "Elizabeth"), new Vertex("F", "Elizabeth"), 9);
+    // MakeRouteImpossible(graph, "D", "E", "Bridge Closed");
+    // DisplayImpossibleRoutes(graph);
+  }
 
-        return graph;
-    }
+  // static Graph ConstructGraph()
+  // {
+  //   var graph = new Graph();
+  //   graph.AddVertex("A");
+  //   graph.AddVertex("B");
+  //   graph.AddVertex("C");
+  //   graph.AddVertex("D");
+  //   graph.AddVertex("E");
+  //   graph.AddVertex("F");
 
-    static void MakeRouteImpossible(Graph graph, string from, string to, string comment) 
-    {
-        graph.MakeRouteImpossible(from, to, comment);
-    }
-    static void MakeRoutePossible(Graph graph, string from, string to, string comment) 
-    {
-        graph.MakeRoutePossible(from, to);
-    }
+  //   graph.AddEdge(new Vertex("A"), new Vertex("B"), 7);
+  //   graph.AddEdge(new Vertex("A"), new Vertex("C"), 9);
+  //   graph.AddEdge(new Vertex("A"), new Vertex("F"), 14);
+  //   graph.AddEdge(new Vertex("B"), new Vertex("C"), 10);
+  //   graph.AddEdge(new Vertex("B"), new Vertex("D"), 15);
+  //   graph.AddEdge(new Vertex("C"), new Vertex("D"), 11);
+  //   graph.AddEdge(new Vertex("C"), new Vertex("F"), 2);
+  //   graph.AddEdge(new Vertex("D"), new Vertex("E"), 6);
+  //   graph.AddEdge(new Vertex("E"), new Vertex("F"), 9);
 
-    static void AddDelayToRoute(Graph graph, string from, string to, int delay)
-    {
-        graph.AddDelay(from, to, delay);
-    }
-    static void RemoveDelayFromRoute(Graph graph, string from, string to, int delay)
-    {
-        graph.RemoveDelay(from, to, delay);
-    }
+  //   return graph;
+  // }
 
-    static void DisplayDelayedRoutes(Graph graph)
-    {
-        foreach (var vertex in graph.Vertices)
-        {
-            var delayedRoutes = vertex.Value.GetDelayedRoutes();
+  static void MakeRouteImpossible(Graph graph, string from, string to, string comment)
+  {
+    graph.MakeRouteImpossible(from, to, comment);
+  }
+  static void MakeRoutePossible(Graph graph, string from, string to, string comment)
+  {
+    graph.MakeRoutePossible(from, to);
+  }
 
-            foreach (var delayedRoute in delayedRoutes)
-            {
-                Console.WriteLine($"({vertex.Key} - {delayedRoute.Node}, {vertex.Value.GetWeight(delayedRoute)})");
-            }
-        }
-    }
-    static void DisplayImpossibleRoutes(Graph graph)
+  static void AddDelayToRoute(Graph graph, string from, string to, int delay)
+  {
+    graph.AddDelay(from, to, delay);
+  }
+  static void RemoveDelayFromRoute(Graph graph, string from, string to, int delay)
+  {
+    graph.RemoveDelay(from, to, delay);
+  }
+
+  static void DisplayDelayedRoutes(Graph graph)
+  {
+    foreach (var vertex in graph.Vertices)
     {
-        foreach (var vertex in graph.Vertices)
-        {
-            var delayedRoutes = vertex.Value.GetImpossibleRoutes();
-            
-            foreach (var delayedRoute in delayedRoutes)
-            {
-                Console.WriteLine($"Route Impossible: ({vertex.Key} - {delayedRoute.Node}, {vertex.Value.RouteImpossibleComment})");
-            }
-        }
+      var delayedRoutes = vertex.Value.GetDelayedRoutes();
+
+      foreach (var delayedRoute in delayedRoutes)
+      {
+        Console.WriteLine($"({vertex.Key} - {delayedRoute.Node}, {vertex.Value.GetWeight(delayedRoute)})");
+      }
     }
+  }
+  static void DisplayImpossibleRoutes(Graph graph)
+  {
+    foreach (var vertex in graph.Vertices)
+    {
+      var delayedRoutes = vertex.Value.GetImpossibleRoutes();
+
+      foreach (var delayedRoute in delayedRoutes)
+      {
+        Console.WriteLine($"Route Impossible: ({vertex.Key} - {delayedRoute.Node}, {vertex.Value.RouteImpossibleComment})");
+      }
+    }
+  }
 }
 
 
