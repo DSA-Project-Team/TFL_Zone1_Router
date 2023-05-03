@@ -41,35 +41,14 @@ namespace tflzone1.Models
 
       string station = inputValue != null ? inputValue : "";
 
-      // List of dummy route names within zone 1 (to be changed later)
+      //TODO: List of dummy route names within zone 1 (to be changed later)
       List<string> validRoutes = new List<string> { "Oxford Circus", "Paddington", "Waterloo" };
 
-      //TODO: Check if the route name exists within zone 1 and change the state of isRouteValid accordingly [It is important to convert route input value and actual route values to lowercase before comparing them because some users might enter "oxford Circus" instead of "Oxford Circus"]
+      //TODO: Check if the route name exists within zone 1 and change the state of isRouteValid accordingly [It is important to convert route input value from the console and the actual route values from the list to lowercase before comparing them because some users might enter "oxford CircuS" instead of "Oxford Circus", which will result to a mismatch]
 
       bool isRouteValid = validRoutes.Contains(station);
 
       return (isRouteValid, station);
-    }
-
-    public static string CapitalizeFirstLetter(string content)
-    {
-      if (string.IsNullOrEmpty(content))
-      {
-        return content;
-      }
-
-      string[] words = content.Split(' ');
-
-      for (int i = 0; i < words.Length; i++)
-      {
-        if (words[i].Length > 0)
-        {
-          char firstChar = Char.ToUpper(words[i][0]);
-          words[i] = firstChar + words[i].Substring(1).ToLower();
-        }
-      }
-
-      return string.Join(" ", words);
     }
   }
 }

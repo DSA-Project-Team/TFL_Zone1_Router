@@ -139,6 +139,7 @@ namespace tflzone1.Models
 
       string errorMessage = "Error: Enter only 1 or 2 to select your preferred menu option";
 
+      // Hardcoded values
       int stationId = 419;
       string stationName = TextHelper.CapitalizeFirstLetter(station);
       string tubeLine = TextHelper.CapitalizeFirstLetter("central");

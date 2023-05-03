@@ -5,6 +5,7 @@ class Program
 {
   static void Main(string[] args)
   {
+    //Start the application menu
     MainMenu.UserSelectMenu();
 
 

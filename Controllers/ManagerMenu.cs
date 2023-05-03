@@ -63,9 +63,9 @@ namespace tflzone1.Models
 
       (bool isStartStationCorrect, string startStation) = MenuHelper.stationInputChecker("Enter Start Station");
       (bool isNextStationCorrect, string nextStation) = MenuHelper.stationInputChecker("Enter Next Station");
-      (bool isNewRouteTimeCorrect, int newRouteTime) = MenuHelper.InputChecker("Enter New Route Time");
+      (bool isNewRouteTimeCorrect, int newRouteTime) = MenuHelper.InputChecker("Enter New Route Time (in minutes)");
 
-      bool areStartionNext = true;
+      bool areStartionNext = true; // hardcoded
 
       void ShowNavigation()
       {
@@ -108,7 +108,7 @@ namespace tflzone1.Models
         }
         else
         {
-          MenuHelper.ErrorMessage($"{TextHelper.CapitalizeFirstLetter(startStation)} and {TextHelper.CapitalizeFirstLetter(nextStation)} are not next to eachother");
+          MenuHelper.ErrorMessage($"Error: {TextHelper.CapitalizeFirstLetter(startStation)} and {TextHelper.CapitalizeFirstLetter(nextStation)} are not next to eachother");
           ChangeRouteTimeMenu();
         }
 
@@ -123,7 +123,7 @@ namespace tflzone1.Models
     public static void CloseRouteMenu()
     {
       string errorMessage = "Error: An invalid station was entered. Do not enter stations outside zone 1, DLR, Elizabeth Line, and London Overground rail lines";
-      bool stationIsClosed = false;
+      bool stationIsClosed = false;  // hardcoded
 
       MenuHelper.MenuHeader();
       Console.WriteLine("Close a route\n");
