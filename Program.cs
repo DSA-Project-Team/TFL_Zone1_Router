@@ -6,37 +6,49 @@ class Program
 {
   static void Main(string[] args)
   {
-    //Start the application menu
+    // Start App Menu
+    // GraphConstructor.ConstructGraph();
+    // MainMenu.UserSelectMenu();
+
+    // Test
+    // var graph = ConstructTestGraph();
+    // graph.FindFastestWalkingRoute("A", "H");
+
+    // TFL ZONE 1
     GraphConstructor.ConstructGraph();
+    var graph = GraphConstructor.graph;
     MainMenu.UserSelectMenu();
-
-
     // MakeRouteImpossible(graph, "D", "E", "Bridge Closed");
     // DisplayImpossibleRoutes(graph);
   }
 
-  // static Graph ConstructGraph()
-  // {
-  //   var graph = new Graph();
-  //   graph.AddVertex("A");
-  //   graph.AddVertex("B");
-  //   graph.AddVertex("C");
-  //   graph.AddVertex("D");
-  //   graph.AddVertex("E");
-  //   graph.AddVertex("F");
+  static Graph ConstructTestGraph()
+  {
+    var graph = new Graph();
+    graph.AddVertex("A");
+    graph.AddVertex("B");
+    graph.AddVertex("C");
+    graph.AddVertex("D");
+    graph.AddVertex("E");
+    graph.AddVertex("F");
+    graph.AddVertex("G");
+    graph.AddVertex("H");
 
-  //   graph.AddEdge(new Vertex("A"), new Vertex("B"), 7);
-  //   graph.AddEdge(new Vertex("A"), new Vertex("C"), 9);
-  //   graph.AddEdge(new Vertex("A"), new Vertex("F"), 14);
-  //   graph.AddEdge(new Vertex("B"), new Vertex("C"), 10);
-  //   graph.AddEdge(new Vertex("B"), new Vertex("D"), 15);
-  //   graph.AddEdge(new Vertex("C"), new Vertex("D"), 11);
-  //   graph.AddEdge(new Vertex("C"), new Vertex("F"), 2);
-  //   graph.AddEdge(new Vertex("D"), new Vertex("E"), 6);
-  //   graph.AddEdge(new Vertex("E"), new Vertex("F"), 9);
+    graph.AddEdge(new Vertex("A"), new Vertex("E"), 4, true);
+    graph.AddEdge(new Vertex("A"), new Vertex("D"), 6, true);
+    graph.AddEdge(new Vertex("B"), new Vertex("A"), 1, true);
+    graph.AddEdge(new Vertex("D"), new Vertex("B"), 3, true);
+    graph.AddEdge(new Vertex("B"), new Vertex("C"), 8, true);
+    graph.AddEdge(new Vertex("E"), new Vertex("C"), 1, true);
+    graph.AddEdge(new Vertex("D"), new Vertex("F"), 3, true);
+    graph.AddEdge(new Vertex("G"), new Vertex("C"), 1, true);
+    graph.AddEdge(new Vertex("E"), new Vertex("H"), 9, true);
+    graph.AddEdge(new Vertex("F"), new Vertex("G"), 8, true);
+    graph.AddEdge(new Vertex("H"), new Vertex("G"), 2, true);
+    graph.AddEdge(new Vertex("H"), new Vertex("F"), 5, true);
 
-  //   return graph;
-  // }
+    return graph;
+  }
 
   static void MakeRouteImpossible(Graph graph, string from, string to, string comment)
   {
@@ -55,55 +67,8 @@ class Program
   {
     graph.RemoveDelay(from, to, delay);
   }
-
-  static void DisplayDelayedRoutes(Graph graph)
-  {
-    foreach (var vertex in graph.Vertices)
-    {
-      var delayedRoutes = vertex.Value.GetDelayedRoutes();
-
-      foreach (var delayedRoute in delayedRoutes)
-      {
-        Console.WriteLine($"({vertex.Key} - {delayedRoute.Node}, {vertex.Value.GetWeight(delayedRoute)})");
-      }
-    }
-  }
-  static void DisplayImpossibleRoutes(Graph graph)
-  {
-    foreach (var vertex in graph.Vertices)
-    {
-      var delayedRoutes = vertex.Value.GetImpossibleRoutes();
-
-      foreach (var delayedRoute in delayedRoutes)
-      {
-        Console.WriteLine($"Route Impossible: ({vertex.Key} - {delayedRoute.Node}, {vertex.Value.RouteImpossibleComment})");
-      }
-    }
-  }
 }
 
-
-
-
-// foreach (var vertex in graph.Vertices)
-//         {
-//             foreach (var w in vertex.Value.GetNeighbours())
-//             {
-//                 Console.WriteLine($"({vertex.Value.Node},{w.Node},{vertex.Value.GetWeight(w)})");
-//             }
-//         }
-
-//         Dijkstra.CalculateShortestPath(graph, graph.GetVertex("A"), graph.GetVertex("E"));
-//         var target = graph.GetVertex("E");
-//         var path = new List<String>(){ target.Node };
-//         path = Dijkstra.FindShortestPath(target, path);
-//         var result = "[ ";
-//         foreach (var p in path)
-//         {
-//             result = $"{result}, {p}";
-//         }
-//         result = $"{result} ]";
-//         Console.WriteLine($"The shortest path is: {result}");
 
 // Algorithm Analysis
 // Stopwatch stopWatch = new Stopwatch();

@@ -7,7 +7,8 @@ namespace tflzone1.Models
 {
   class Vertex
   {
-    private Dictionary<Vertex, int> _neighbours; // Charing Cross (Northern, Bakerloo)
+    private Dictionary<Vertex, int> _neighbours;
+    private Dictionary<Vertex, int> _neighboursCopy;
     private bool _visited;
     public bool Visited
     {
@@ -55,12 +56,25 @@ namespace tflzone1.Models
       set { _routeImpossibleComment = value; }
     }
 
+    private Status _status;
+    public Status Status
+    {
+        get { return _status; }
+        set { _status = value; }
+    }
+    private Access _access;
+    public Access Access
+    {
+        get { return _access; }
+        set { _access = value; }
+    }
 
     public Vertex(string node)
     {
       _node = node;
       _distance = Int32.MaxValue;
       _neighbours = new Dictionary<Vertex, int>();
+      _neighboursCopy = new Dictionary<Vertex, int>();
       _hasDelay = false;
       _routeImpossibleComment = String.Empty;
     }
@@ -69,6 +83,7 @@ namespace tflzone1.Models
     {
       if (!_neighbours.ContainsKey(v))
         _neighbours.Add(v, weight);
+        _neighboursCopy.Add(v, weight);
     }
 
     public void AddDelay(string v, int delay)
@@ -84,16 +99,17 @@ namespace tflzone1.Models
       vertex.Key._hasDelay = false;
     }
 
-    public void MakeRouteImpossible(string v, string reason)
+    public void MakeRouteImpossible(string v, string? reason)
     {
-      var vertex = _neighbours.FirstOrDefault((kv) => kv.Key.Node == v);
-      vertex.Key._routeImpossible = true;
-      vertex.Key._routeImpossibleComment = reason;
+        var vertex = _neighbours.FirstOrDefault((kv) => kv.Key.Node == v);
+        vertex.Key._status = Status.Closed;
+        vertex.Key._routeImpossibleComment = String.IsNullOrEmpty(reason) ? "": reason;
     }
     public void MakeRoutePossible(string v)
     {
-      var vertex = _neighbours.FirstOrDefault((kv) => kv.Key.Node == v);
-      vertex.Key._routeImpossible = false;
+        var vertex = _neighbours.FirstOrDefault((kv) => kv.Key.Node == v);
+        vertex.Key._status = Status.Open;
+        vertex.Key._routeImpossibleComment = "";
     }
 
     public Vertex[] GetNeighbours()
@@ -107,13 +123,19 @@ namespace tflzone1.Models
     }
     public Vertex[] GetImpossibleRoutes()
     {
-      return _neighbours.Keys.ToList().Where(v => v._routeImpossible == true).ToArray();
+      return _neighbours.Keys.ToList().Where(v => v._status == Status.Closed).ToArray();
     }
 
     public int GetWeight(Vertex neighbor)
     {
       if (_neighbours.ContainsKey(neighbor))
         return _neighbours[neighbor];
+      return 0;
+    }
+    public int GetOriginalWeight(Vertex neighbor)
+    {
+      if (_neighboursCopy.ContainsKey(neighbor))
+        return _neighboursCopy[neighbor];
       return 0;
     }
     public void SetDistance(int distance)
