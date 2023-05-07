@@ -65,7 +65,8 @@ namespace tflzone1.Models
       if (isStartStationCorrect && isEndStationCorrect)
       {
         Console.Clear();
-        ShowRouteMenu(startStation, endStation);
+        graph.FindFastestWalkingRoute(startStation, endStation);
+        // ShowRouteMenu(startStation, endStation);
       }
       else
       {
@@ -142,26 +143,33 @@ namespace tflzone1.Models
       }
     }
 
-    public static void ShowStationInfo(string station)
+    public static void ShowStationInfo(string stationName)
     {
       //TODO: Call function that gets the station information , probably in the form of a object with the following properties: id, name, tube line (central, circle, etc), travel zone (zone 1, etc), and station status (closed, opened, or delayed) 
 
       string errorMessage = "Error: Enter only 1 or 2 to select your preferred menu option";
 
-      // Hardcoded values
-      int stationId = 419;
-      string stationName = TextHelper.CapitalizeFirstLetter(station);
-      string tubeLine = TextHelper.CapitalizeFirstLetter("central");
-      string travelZone = TextHelper.CapitalizeFirstLetter("zone 1");
-      string stationStatus = TextHelper.CapitalizeFirstLetter("open");
+      var station = graph.GetStationInfo(stationName);
 
-      MenuHelper.MenuHeader();
-      Console.WriteLine("Station Information\n");
-      Console.WriteLine($"Station ID: {stationId}");
-      Console.WriteLine($"Station Name: {stationName}");
-      Console.WriteLine($"Tube Line: {tubeLine}");
-      Console.WriteLine($"Travel Zone: {travelZone}");
-      Console.WriteLine($"Station Status: {stationStatus}\n");
+      if(station is null) {
+        MenuHelper.ErrorMessage("Station not found");
+      } else {
+        // Hardcoded values
+        // int stationId = 419;
+        // string stationName = TextHelper.CapitalizeFirstLetter(station);
+        // string tubeLine = TextHelper.CapitalizeFirstLetter("central");
+        // string travelZone = TextHelper.CapitalizeFirstLetter("zone 1");
+        // string stationStatus = TextHelper.CapitalizeFirstLetter("open");
+
+        MenuHelper.MenuHeader();
+        Console.WriteLine("Station Information\n");
+        // Console.WriteLine($"Station ID: {stationId}");
+        Console.WriteLine($"Station Name: {TextHelper.CapitalizeFirstLetter(station.Node.Split(':')[1])}");
+        Console.WriteLine($"Tube Line: {TextHelper.CapitalizeFirstLetter(station.Node.Split(':')[0])}");
+        Console.WriteLine($"Travel Zone: Zone 1");
+        Console.WriteLine($"Station Status: {station.Status}\n");
+      }
+
 
 
       (bool isInputInteger, int inputValue) = MenuHelper.InputChecker("Enter 1 to check another station information or 2 to go to main customer menu");
@@ -180,14 +188,14 @@ namespace tflzone1.Models
             break;
           default:
             MenuHelper.ErrorMessage(errorMessage);
-            ShowStationInfo(station);
+            ShowStationInfo(stationName);
             break;
         }
       }
       else
       {
         MenuHelper.ErrorMessage(errorMessage);
-        ShowStationInfo(station);
+        ShowStationInfo(stationName);
       }
     }
   }
