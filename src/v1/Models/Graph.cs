@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using testing_and_benchmarking;
+
 namespace tflzone1.Models
 {
   class Graph
@@ -73,12 +78,13 @@ namespace tflzone1.Models
       return true;
     }
 
-    public void RemoveDelay(string from, string to, int delayCost)
+    public bool RemoveDelay(string from, string to)
     {
       if (!_vertices.ContainsKey(from) || !_vertices.ContainsKey(to))
-        return;
-      _vertices[from].RemoveDelay(to, delayCost);
-      _vertices[to].RemoveDelay(from, delayCost);
+        return false;
+      _vertices[from].RemoveDelay(to);
+      _vertices[to].RemoveDelay(from);
+      return true;
     }
 
     public bool MakeRouteImpossible(string from, string to, string? reason)
@@ -94,12 +100,13 @@ namespace tflzone1.Models
       return true;
     }
 
-    public void MakeRoutePossible(string from, string to)
+    public bool MakeRoutePossible(string from, string to)
     {
       if (!_vertices.ContainsKey(from) || !_vertices.ContainsKey(to))
-        return;
+        return false;
       _vertices[from].MakeRoutePossible(to);
       _vertices[to].MakeRoutePossible(from);
+      return true;
     }
 
     public void SetCurrent(Vertex prev)
@@ -159,6 +166,7 @@ namespace tflzone1.Models
 
     public void FindFastestWalkingRoute(string start, string target)
     {
+      RunTimeAnalyzer.Start(); // Start Timer
       var pathResult = CalculateShortestPath(start, target);
 
       if(pathResult.Item1 != "Path found") {
@@ -179,6 +187,9 @@ namespace tflzone1.Models
 
         Console.ResetColor();
       }
+
+      RunTimeAnalyzer.Stop(); // Stop Timer
+      RunTimeAnalyzer.Save(); // Save Result
     }
 
     private (string, List<(string, string, int)>) CalculateShortestPath(string start, string target)
@@ -238,16 +249,9 @@ namespace tflzone1.Models
               pathsToVertex.Add(neighbor.Node, new List<(string, string, int)>{(current.Node, neighbor.Node, current.GetWeight(neighbor))});
             }
             pq.Enqueue(neighbor, edgeToCurrent + current.GetWeight(neighbor));
-          } 
-          // else {
-          //   edgesToVertex[neighbor.Node].Add((current.Node, neighbor.Node, current.GetWeight(neighbor)));
-          // }
+          }
         }
       }
-
-      // Console.WriteLine(distToVertex);
-      // Console.WriteLine(edgeToVertex);
-      // Console.WriteLine(pathsToVertex);
 
       return ("Path found", pathsToVertex[target]);
     }

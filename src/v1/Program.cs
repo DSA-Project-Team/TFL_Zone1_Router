@@ -6,20 +6,11 @@ class Program
 {
   static void Main(string[] args)
   {
-    // Start App Menu
-    // GraphConstructor.ConstructGraph();
-    // MainMenu.UserSelectMenu();
-
-    // Test
-    // var graph = ConstructTestGraph();
-    // graph.FindFastestWalkingRoute("A", "H");
 
     // TFL ZONE 1
     GraphConstructor.ConstructGraph();
     var graph = GraphConstructor.graph;
     MainMenu.UserSelectMenu();
-    // MakeRouteImpossible(graph, "D", "E", "Bridge Closed");
-    // DisplayImpossibleRoutes(graph);
   }
 
   static Graph ConstructTestGraph()
@@ -48,24 +39,6 @@ class Program
     graph.AddEdge(new Vertex("H"), new Vertex("F"), 5, true);
 
     return graph;
-  }
-
-  static void MakeRouteImpossible(Graph graph, string from, string to, string comment)
-  {
-    graph.MakeRouteImpossible(from, to, comment);
-  }
-  static void MakeRoutePossible(Graph graph, string from, string to, string comment)
-  {
-    graph.MakeRoutePossible(from, to);
-  }
-
-  static void AddDelayToRoute(Graph graph, string from, string to, int delay)
-  {
-    graph.AddDelay(from, to, delay);
-  }
-  static void RemoveDelayFromRoute(Graph graph, string from, string to, int delay)
-  {
-    graph.RemoveDelay(from, to, delay);
   }
 }
 

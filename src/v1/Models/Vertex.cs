@@ -92,10 +92,10 @@ namespace tflzone1.Models
       _neighbours[vertex.Key] += delay;
       vertex.Key._hasDelay = true;
     }
-    public void RemoveDelay(string v, int delay)
+    public void RemoveDelay(string v)
     {
       var vertex = _neighbours.FirstOrDefault((kv) => kv.Key.Node == v);
-      _neighbours[vertex.Key] -= delay;
+      _neighbours[vertex.Key] = _neighboursCopy[vertex.Key];
       vertex.Key._hasDelay = false;
     }
 
@@ -107,9 +107,9 @@ namespace tflzone1.Models
     }
     public void MakeRoutePossible(string v)
     {
-        var vertex = _neighbours.FirstOrDefault((kv) => kv.Key.Node == v);
-        vertex.Key._status = Status.Open;
-        vertex.Key._routeImpossibleComment = "";
+      var vertex = _neighbours.FirstOrDefault((kv) => kv.Key.Node == v);
+      vertex.Key._status = Status.Open;
+      vertex.Key._routeImpossibleComment = "";
     }
 
     public Vertex[] GetNeighbours()

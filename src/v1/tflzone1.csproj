@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../testing_and_benchmarking/testing_and_benchmarking.csproj"/>
+  </ItemGroup>
+
 </Project>

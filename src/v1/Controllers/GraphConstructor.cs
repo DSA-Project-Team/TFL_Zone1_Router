@@ -1,18 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using tflzone1.Models;
 
 namespace tflzone1.Controllers
 {
     static class GraphConstructor
     {
-        public static Graph graph; //= new Graph();
+        public static Graph graph;
 
         public static void ConstructGraph()
         {
             graph = new Graph();
+
+            // Bakerloo
             graph.AddVertex("bakerloo: paddington");
             graph.AddVertex("bakerloo: edgware road");
             graph.AddVertex("bakerloo: maryleborne");
@@ -25,7 +23,7 @@ namespace tflzone1.Controllers
             graph.AddVertex("bakerloo: waterloo");
             graph.AddVertex("bakerloo: labert North");
             graph.AddVertex("bakerloo: elephant and castle");
-
+            
             graph.AddEdge(new Vertex("bakerloo: paddington"), new Vertex("bakerloo: edgware road"), 11);
             graph.AddEdge(new Vertex("bakerloo: edgware road"), new Vertex("bakerloo: maryleborne"), 7);
             graph.AddEdge(new Vertex("bakerloo: maryleborne"), new Vertex("bakerloo: baker street"), 6);

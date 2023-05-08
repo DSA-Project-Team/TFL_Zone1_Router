@@ -1,4 +1,6 @@
-namespace tflzone1.Models
+using System;
+
+namespace v2.Utilities
 {
   class TextHelper
   {
